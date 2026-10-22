@@ -33,5 +33,27 @@ export async function POST(request: Request) {
     .single();
 
   if (error) return NextResponse.json({ error }, { status: 500 });
+
+  // Уведомление в Telegram
+  const message = `
+🆕 Новый заказ #${newOrder.id.slice(-6)}
+
+👤 ${newOrder.name}
+📞 ${newOrder.phone}
+📦 ${newOrder.items.map((i: any) => i.title).join(", ")}
+💰 ${newOrder.total.toLocaleString("ru-RU")} ₽
+🚚 ${newOrder.delivery_type === "delivery" ? "Доставка" : "Самовывоз"}
+📍 ${newOrder.address}
+  `.trim();
+
+  await fetch(`https://api.telegram.org/bot${process.env.TELEGRAM_BOT_TOKEN}/sendMessage`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      chat_id: process.env.TELEGRAM_CHAT_ID,
+      text: message,
+    }),
+  });
+
   return NextResponse.json(data);
 }
