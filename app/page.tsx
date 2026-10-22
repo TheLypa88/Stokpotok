@@ -147,7 +147,7 @@ export default function Home() {
       <header className="sticky top-0 z-50 bg-white border-b border-neutral-200">
         <div className="max-w-lg mx-auto px-4 h-14 flex items-center justify-between">
           <Link href="/">
-            <img src="/logo.png" alt="СтокПоток" className="h-12" />
+            <h1 className="text-xl font-bold text-black">СтокПоток</h1>
           </Link>
           <div className="flex items-center gap-4">
             <Link href="/contacts" className="text-sm font-medium text-black">
